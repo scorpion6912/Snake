@@ -5,36 +5,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/index.css">
     <title>Snake Notes</title>
-    <style>
-        #game,
-        #levelselection {
-            display: none;
-            border: 3px solid red;
-        }
-
-        input#screenswitch:checked~#game {
-            display: block;
-        }
-
-
-        input#screenswitch:not(:checked)~#levelselection {
-            display: block;
-        }
-    </style>
 </head>
 
 <body>
+    <script type="module" src="src/index.js"></script>
     <h1>Snake Notes</h1>
     <main>
         <input type="checkbox" style="display:none;" id="screenswitch" />
         <div id="levelselection">
-            <!Rémy tu fais ici>
-                <p>Coming Soon</p>
+            <button id="level1"> level 1</button>
+            <button id="level2"> level 2</button>
+            <button id="level3"> level 3</button>
+            <p>Coming Soon TM</p>
         </div>
         <canvas id="game"></canvas>
     </main>
-    <script type="module" src="src/index.js"></script>
 </body>
 
 </html>
