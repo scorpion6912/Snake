@@ -1,2 +1,2 @@
 import launchGame from "./game.js";
-launchGame(0);
+launchGame(1);

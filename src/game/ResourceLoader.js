@@ -1,6 +1,7 @@
 
 class ResourceLoader {
 
+    toLoad = 6;
 
     /*
      * lvl - le chemin du JSON à charger
@@ -24,16 +25,17 @@ class ResourceLoader {
         this.loadImg("/res/turn.png").then(img => this.turn = img);
         this.loadImg("/res/head.png").then(img => this.head = img);
         this.loadImg("/res/tail.png").then(img => this.tail = img);
-        this.loadJSON("/test.json").then(data => this.level = data)
+        this.loadJSON(lvl).then(data => this.level = data).catch(console.log);
     }
 
     loadImg(url) {
+        let me = this;
         return new Promise(function (resolve, reject) {
             var img = new Image();
             img.src = url;
             img.onload = function () {
-                this.toLoad -= 1;
-                if (this.toLoad <= 0) this.resolved();
+                me.toLoad -= 1;
+                if (me.toLoad <= 0) me.resolved();
                 resolve(img)
             };
             img.onerror = reject;
@@ -42,16 +44,18 @@ class ResourceLoader {
     }
 
     loadJSON(url) {
+        let me = this;
         return new Promise(function (resolve, reject) {
-            var req = new XMLHttpRequest();
+            let req = new XMLHttpRequest();
             req.open("GET", url);
             req.onerror = reject
             req.onload = function () {
                 if (req.status === 200) {
-                    this.toLoad -= 1;
+                    me.toLoad -= 1;
+                    if (me.toLoad <= 0) me.resolved();
                     resolve(JSON.parse(req.responseText));
                 } else {
-                    reject("Erreur " + req.status);
+                    reject("Erreur " + req.status + " sur " + url);
                 }
             };
             req.send();
@@ -63,7 +67,7 @@ class ResourceLoader {
 
 function loadResources(nb) {
     return new Promise(function (resolve, _reject) {
-        new ResourceLoader("", resolve);
+        new ResourceLoader(`/levels/level${nb.toString()}.json`, resolve);
     });
 }
 
