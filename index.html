@@ -6,6 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake Notes</title>
+    <style>
+        #game,
+        #levelselection {
+            display: none;
+            border: 3px solid red;
+        }
+
+        input#screenswitch:checked~#game {
+            display: block;
+        }
+
+
+        input#screenswitch:not(:checked)~#levelselection {
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
@@ -14,6 +30,7 @@
         <input type="checkbox" style="display:none;" id="screenswitch" />
         <div id="levelselection">
             <!Rémy tu fais ici>
+                <p>Coming Soon</p>
         </div>
         <canvas id="game"></canvas>
     </main>
