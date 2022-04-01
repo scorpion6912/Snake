@@ -1,1 +1,2 @@
-import "game.js";
+import launchGame from "./game.js";
+launchGame(0);
