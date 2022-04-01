@@ -10,7 +10,7 @@ const DECAL_X = 22;
 const MAX_Y = 33;
 const DECAL_Y = 27;
 
-let game;
+let engine;
 
 class Game {
     constructor(resourceloader) {
@@ -28,7 +28,9 @@ class Game {
         ctx.drawImage(this.rloader.bg, 0, 0, 800, 600);
     }
 
-    displayElement(element, x, y)
+    displayElement(element, x, y) {
+        return;
+    }
     setGrid() {
         this.decal = [
             Math.round(DECAL_X + (MAX_X - this.dim[0]) * 35 / 2),
@@ -48,7 +50,7 @@ let resourceloader = null;
 async function launchGame(n) {
     let loader = await loadResources(n);
 
-    game = new Game(loader);
+    engine = new Game(loader);
 
 }
 

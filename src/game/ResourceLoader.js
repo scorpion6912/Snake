@@ -8,7 +8,7 @@ class ResourceLoader {
      * whenfinished - la fonction appelée quand le chargement est fini
      */
     constructor(lvl, whenfinished) {
-        this.toLoad = 6;
+        this.toLoad = 7;
         this.bg = null;
         this.normal = null;
         this.turn = null;
@@ -35,8 +35,8 @@ class ResourceLoader {
             img.src = url;
             img.onload = function () {
                 me.toLoad -= 1;
-                if (me.toLoad <= 0) me.resolved();
                 resolve(img)
+                if (me.toLoad <= 0) me.resolved();
             };
             img.onerror = reject;
         });
@@ -52,8 +52,8 @@ class ResourceLoader {
             req.onload = function () {
                 if (req.status === 200) {
                     me.toLoad -= 1;
-                    if (me.toLoad <= 0) me.resolved();
                     resolve(JSON.parse(req.responseText));
+                    if (me.toLoad <= 0) me.resolved();
                 } else {
                     reject("Erreur " + req.status + " sur " + url);
                 }
