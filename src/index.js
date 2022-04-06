@@ -8,3 +8,12 @@ function launchGameNumber(n) {
 document.getElementById("level1").onclick = function () {
     launchGameNumber(1);
 }
+
+document.getElementById("level2").onclick = function () {
+    launchGameNumber(2);
+}
+
+
+document.getElementById("level3").onclick = function () {
+    launchGameNumber(3);
+}

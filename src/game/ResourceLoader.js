@@ -19,12 +19,12 @@ class ResourceLoader {
 
         this.resolved = function () { whenfinished(this) };
 
-        this.loadImg("/res/bg.jpg").then(img => this.bg = img);
-        this.loadImg("/res/normal.png").then(img => this.normal = img);
-        this.loadImg("/res/apple.png").then(img => this.apple = img);
-        this.loadImg("/res/turn.png").then(img => this.turn = img);
-        this.loadImg("/res/head.png").then(img => this.head = img);
-        this.loadImg("/res/tail.png").then(img => this.tail = img);
+        this.loadImg("./res/bg.jpg").then(img => this.bg = img);
+        this.loadImg("./res/normal.png").then(img => this.normal = img);
+        this.loadImg("./res/apple.png").then(img => this.apple = img);
+        this.loadImg("./res/turn.png").then(img => this.turn = img);
+        this.loadImg("./res/head.png").then(img => this.head = img);
+        this.loadImg("./res/tail.png").then(img => this.tail = img);
         this.loadJSON(lvl).then(data => this.level = data).catch(console.log);
     }
 
@@ -67,7 +67,7 @@ class ResourceLoader {
 
 function loadResources(nb) {
     return new Promise(function (resolve, _reject) {
-        new ResourceLoader(`/levels/level${nb.toString()}.json`, resolve);
+        new ResourceLoader(`./levels/level${nb.toString()}.json`, resolve);
     });
 }
 
