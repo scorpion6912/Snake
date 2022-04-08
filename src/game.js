@@ -1,4 +1,9 @@
 import loadResources from "./game/ResourceLoader";
+import Boss from "./game/boss.js";
+
+
+let audio = new Audio('./res/ugly_pullus.ogg');
+let audio2 = new Audio('./res/rythmbeca.mp3');
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
@@ -43,7 +48,7 @@ class Game {
 
         this.applepos = Object.values(this.rloader.level.food);
 
-        this.dir = (this.drawSnake()) % 4;
+        this.dir = (6 - this.drawSnake()) % 4;
         this.actualizeAndDrawApple();
 
         this.onlose = function (score) { onlose(score); }
@@ -53,17 +58,36 @@ class Game {
         //Savoir s'il a mangé
         this.ate = false;
 
+        this.boss = this.rloader.level.bossfight ? new Boss(this.dim) : false;
+
+        if (this.boss) {
+            let tmp = audio;
+            audio = audio2;
+            audio2 = tmp;
+        }
+        if (audio.paused) audio.play(-1);
 
         const me = this;
 
-
+        this.delay = this.rloader.level.delay;
         this.loopid = setInterval(function () {
             me.actualize();
-        }, this.rloader.level.delay);
+        }, this.delay);
 
         window.onkeydown = function (event) {
             me.keyHandler(event);
         }
+
+        me.actualize();
+
+    }
+
+    accelerate() {
+        clearInterval(this.loopid);
+
+        this.loopid = setInterval(function () {
+            me.actualize();
+        }, this.delay * 0.75);
 
     }
 
@@ -123,6 +147,15 @@ class Game {
     actualize() {
         this.actualizeSnake();
         if (!this.testCollision()) {
+
+            audio.pause();
+            audio.currentTime = 0;
+            if (this.boss) {
+                let tmp = audio;
+                audio = audio2;
+                audio2 = tmp;
+            }
+
             this.onlose(this.snake.length);
             clearInterval(this.loopid);
             return;
@@ -139,6 +172,8 @@ class Game {
 
     drawWalls() {
         for (let w of this.rloader.level.walls) ctx.drawImage(this.rloader.wall, this.decal[0] + w[0] * SQUARX, this.decal[1] + w[1] * SQUARY, SQUARX, SQUARY);
+
+        if (this.boss) ctx.drawImage(this.rloader.boss, this.decal[0] + this.boss.pos[0] * SQUARX, this.decal[1] + this.boss.pos[1] * SQUARY, SQUARX * 3, 3 * SQUARY);
     }
 
     testCollision() {
@@ -146,8 +181,9 @@ class Game {
         for (let w of this.rloader.level.walls) {
             this.zone[w[0]][w[1]] = WALL;
         }
+        if (this.boss) this.boss.actualize(this);
         for (let s of this.snake) {
-            if (s[0] > this.dim[0] || s[1] > this.dim[1] || s[0] < 0 || s[1] < 0) {
+            if (s[0] >= this.dim[0] || s[1] >= this.dim[1] || s[0] < 0 || s[1] < 0) {
                 return false;
             }
             if (this.zone[s[0]][s[1]] != 0) {
@@ -159,10 +195,10 @@ class Game {
         return true;
     }
 
-    generateApplePos() {
+    generateApplePos(type) {
         let r, b;
         do {
-            r = [Math.floor(Math.random() * this.dim[0]), Math.floor(Math.random() * this.dim[1])];
+            r = [Math.floor(Math.random() * this.dim[0]), Math.floor(Math.random() * this.dim[1]), type];
             b = this.zone[r[0]][r[1]] == 0;
         } while (!b)
         return r;
@@ -178,8 +214,9 @@ class Game {
             head = this.snake[this.snake.length - 1];
             if (head[0] == apple[0] && head[1] == apple[1]) {
                 this.ate = true;
-                this.applepos[i] = this.generateApplePos();
-            } else ctx.drawImage(this.rloader.apple, this.decal[0] + apple[0] * SQUARX, this.decal[1] + apple[1] * SQUARY, SQUARX, SQUARY);
+                if (apple[2] == 1) this.accelerate;
+                this.applepos[i] = this.generateApplePos(apple[2]);
+            } else ctx.drawImage(apple[2] == 1 ? this.rloader.speedapple : this.rloader.apple, this.decal[0] + apple[0] * SQUARX, this.decal[1] + apple[1] * SQUARY, SQUARX, SQUARY);
 
         }
         this.applepos = this.applepos.filter(function (value, index, arr) {

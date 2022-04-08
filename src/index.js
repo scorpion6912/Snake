@@ -28,3 +28,13 @@ document.getElementById("level3").onclick = function () {
 document.getElementById("level4").onclick = function () {
     launchGameNumber(4);
 }
+
+
+document.getElementById("level5").onclick = function () {
+    launchGameNumber(5);
+}
+
+
+document.getElementById("level6").onclick = function () {
+    launchGameNumber(6);
+}

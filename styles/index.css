@@ -1,3 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap');
+
+
+body {
+    background-color: #fff;
+    background-image: url("../res/htmlbg.jpg");
+    background-size: cover;
+    font-family: 'Grape Nuts', cursive;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 #game,
 #levelselection {
     display: none;
@@ -10,5 +24,28 @@ input#screenswitch:checked~#game {
 
 
 input#screenswitch:not(:checked)~#levelselection {
-    display: block;
+    display: flex;
+    width: 70vw;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    align-items: center;
+    justify-content: space-around;
+}
+
+h1,
+h2 {
+    text-align: center;
+    margin: 0.2em;
+    font-size: 4em;
+}
+
+button {
+    margin: 1em;
+    padding: 1em;
+    font-size: 2em;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    cursor: pointer;
+    border: solid red 0.25em;
 }
