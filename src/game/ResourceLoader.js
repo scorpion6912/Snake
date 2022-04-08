@@ -8,7 +8,7 @@ class ResourceLoader {
      * whenfinished - la fonction appelée quand le chargement est fini
      */
     constructor(lvl, whenfinished) {
-        this.toLoad = 7;
+        this.toLoad = 8;
         this.bg = null;
         this.normal = null;
         this.turn = null;
@@ -16,11 +16,13 @@ class ResourceLoader {
         this.tail = null;
         this.apple = null;
         this.level = null;
+        this.wall = null
 
         this.resolved = function () { whenfinished(this) };
 
         this.loadImg("./res/bg.jpg").then(img => this.bg = img);
         this.loadImg("./res/normal.png").then(img => this.normal = img);
+        this.loadImg("./res/wall.png").then(img => this.wall = img);
         this.loadImg("./res/apple.png").then(img => this.apple = img);
         this.loadImg("./res/turn.png").then(img => this.turn = img);
         this.loadImg("./res/head.png").then(img => this.head = img);
