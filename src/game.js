@@ -1,4 +1,4 @@
-import loadResources from "./game/ResourceLoader";
+import loadResources from "./game/ResourceLoader.js";
 import Boss from "./game/boss.js";
 
 
