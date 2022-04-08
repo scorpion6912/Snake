@@ -3,7 +3,10 @@ import Boss from "./game/boss.js";
 
 
 let audio = new Audio('./res/ugly_pullus.ogg');
+audio.loop = true;
 let audio2 = new Audio('./res/rythmbeca.mp3');
+audio2.loop = true;
+
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
